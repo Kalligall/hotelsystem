@@ -1,0 +1,59 @@
+shows the total revenue of the booked rooms.
+SELECT SUM(price) AS TotalRevenue
+            FROM booking b
+            JOIN roomtobooking rb ON b.id = rb.booking_id
+            JOIN room r ON rb.room_id = r.id;
+
+Shows the average price of rooms in the hotel
+"SELECT AVG(price) AS AveragePrice FROM room"
+            
+Shows available rooms for booking
+"SELECT room_number, type, price FROM room WHERE status = 'Available'"
+
+Shows amount of available rooms and sorts them by type
+SELECT type, COUNT(*) AS TotalRooms
+            FROM room
+            WHERE status = 'Available'
+            GROUP BY type;
+            ";
+
+Shows all bookings
+@"
+                SELECT b.id AS BookingID, c.first_name AS CustomerFirstName, c.last_name AS CustomerLastName, 
+                       b.check_in_date AS CheckInDate, b.check_out_date AS CheckOutDate, b.status AS Status,
+                       STRING_AGG(r.room_number, ', ') AS RoomNumbers
+                FROM booking b
+                JOIN customer c ON b.customer_id = c.id
+                JOIN roomtobooking rb ON b.id = rb.booking_id
+                JOIN room r ON rb.room_id = r.id
+                GROUP BY b.id, c.first_name, c.last_name, b.check_in_date, b.check_out_date, b.status;
+                ";
+
+shows all rooms
+"SELECT id, room_number, type, capacity, price, status FROM room"
+
+shows all the staff members
+"SELECT first_name, last_name, role, phone_number FROM employee"
+
+shows all extra services
+"SELECT id, name, description, price FROM service"
+
+shows all customers with bookings
+SELECT c.first_name, c.last_name, STRING_AGG(r.room_number, ', ') AS RoomNumbers, 
+                   b.check_in_date, b.check_out_date
+            FROM customer c
+            JOIN booking b ON c.id = b.customer_id
+            JOIN roomtobooking rb ON b.id = rb.booking_id
+            JOIN room r ON rb.room_id = r.id
+            GROUP BY c.first_name, c.last_name, b.check_in_date, b.check_out_date;
+
+shows customers bookings when you search for a name
+SELECT b.id AS BookingID, STRING_AGG(r.room_number, ', ') AS RoomNumbers, 
+                   b.check_in_date AS CheckInDate, b.check_out_date AS CheckOutDate, b.status AS Status
+            FROM booking b
+            JOIN customer c ON b.customer_id = c.id
+            JOIN roomtobooking rb ON b.id = rb.booking_id
+            JOIN room r ON rb.room_id = r.id
+            WHERE c.first_name = @FirstName AND c.last_name = @LastName
+            GROUP BY b.id, b.check_in_date, b.check_out_date, b.status;
+            ";

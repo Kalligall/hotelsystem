@@ -1,0 +1,1 @@
+console based system that should oversee bookings and the generic database for the hotel.

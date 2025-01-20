@@ -163,7 +163,7 @@ class HotelBookingSystem
                 JOIN roomtobooking rb ON b.id = rb.booking_id
                 JOIN room r ON rb.room_id = r.id
                 GROUP BY b.id, c.first_name, c.last_name, b.check_in_date, b.check_out_date, b.status;
-            ";
+                ";
 
             var bookings = connection.Query(query);
             Console.WriteLine("\nBookings:");
@@ -315,7 +315,7 @@ class HotelBookingSystem
             FROM booking b
             JOIN roomtobooking rb ON b.id = rb.booking_id
             JOIN room r ON rb.room_id = r.id;
-        ";
+            ";
             var revenue = connection.QuerySingle(query);
 
             Console.WriteLine("\nTotal Revenue from Bookings:");
@@ -333,7 +333,7 @@ class HotelBookingSystem
             FROM room
             WHERE status = 'Available'
             GROUP BY type;
-        ";
+            ";
             var rooms = connection.Query(query);
 
             Console.WriteLine("\nRooms by Type (Available):");
@@ -357,7 +357,7 @@ class HotelBookingSystem
             JOIN roomtobooking rb ON b.id = rb.booking_id
             JOIN room r ON rb.room_id = r.id
             GROUP BY c.first_name, c.last_name, b.check_in_date, b.check_out_date;
-        ";
+            ";
             var customers = connection.Query(query);
 
             Console.WriteLine("\nCustomers with Bookings:");
@@ -389,7 +389,7 @@ class HotelBookingSystem
             JOIN room r ON rb.room_id = r.id
             WHERE c.first_name = @FirstName AND c.last_name = @LastName
             GROUP BY b.id, b.check_in_date, b.check_out_date, b.status;
-        ";
+            ";
 
             var bookings = connection.Query(query, new { FirstName = firstName, LastName = lastName });
 
